@@ -1,0 +1,18 @@
+{
+  "name": "bib-ui",
+  "private": true,
+  "scripts": {
+    "playground": "cd packages/playground && pnpm run dev",
+    "start": "lerna run --parallel --stream start",
+    "build": "lerna run --stream build",
+    "test": "lerna run --stream --no-bail test",
+    "static": "cp -R packages/demo-reactjs/build/ build/ && cp CNAME build/CNAME"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "lerna": "^7.4.1"
+  }
+}
