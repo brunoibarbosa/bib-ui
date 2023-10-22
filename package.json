@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "playground": "cd packages/playground && pnpm run dev",
+    "storybook": "lerna run --parallel --stream storybook",
     "start": "lerna run --parallel --stream start",
     "build": "lerna run --stream build",
     "test": "lerna run --stream --no-bail test",

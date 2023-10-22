@@ -1,8 +1,18 @@
-import { VariantProps } from "tailwind-variants";
-import { buttonVariants } from "./buttonClasses";
+type ButtonColor = "orange" | "red";
+type ButtonSize = "small" | "default" | "large";
+type ButtonVariant = "default" | "transparent" | "text" | "link" | "outline";
+type ButtonShape = "default" | "rounded" | "circle";
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "color"> {
   asChild?: boolean;
+  color?: ButtonColor;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  shape?: ButtonShape;
+  asIcon?: boolean;
+  isLoading?: boolean;
+  startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
+  fullWidth?: boolean;
 }
