@@ -1,4 +1,12 @@
-type ButtonColor = "orange" | "red";
+type ButtonColor =
+  | "orange"
+  | "red"
+  | "yellow"
+  | "green"
+  | "violet"
+  | "blue"
+  | "gray"
+  | "black";
 type ButtonSize = "small" | "default" | "large";
 type ButtonVariant = "default" | "transparent" | "text" | "link" | "outline";
 type ButtonShape = "default" | "rounded" | "circle";
