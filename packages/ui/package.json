@@ -4,11 +4,12 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "dist/index.umd.cjs",
+  "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src/**/*.d.ts"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -34,7 +35,7 @@
     "@storybook/react-vite": "7.5.1",
     "@storybook/testing-library": "0.2.2",
     "@types/react": "^18.2.31",
-    "@vitejs/plugin-react": "^4.0.3",
+    "@vitejs/plugin-react": "^4.1.0",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
     "react": "^18.2.0",
@@ -46,6 +47,13 @@
   },
   "peerDependencies": {
     "react": "^18.2.0"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    },
+    "./dist/style.css": "./dist/styles/main.css"
   },
   "sideEffects": false,
   "publishConfig": {

@@ -1,28 +1,41 @@
 import { Slot, Slottable } from "@radix-ui/react-slot";
 import { forwardRef } from "react";
+import { deepMerge, getComponentProps } from "../../utils";
 import { ButtonProps } from "./Button.types";
 import { buttonVariants } from "./buttonClasses";
 
+const defaultProps = {
+  variant: "default",
+  color: "orange",
+  size: "default",
+  shape: "default",
+  asChild: false,
+  asIcon: false,
+  fullWidth: false,
+  isLoading: false,
+} satisfies Partial<ButtonProps>;
+
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
+  (props, ref) => {
+    const contextAndInvokedProps = getComponentProps("Button", props);
+    const {
       className,
-      variant = "default",
-      color = "orange",
-      size = "default",
-      shape = "default",
-      asChild = false,
-      asIcon = false,
-      fullWidth = false,
+      variant,
+      color,
+      size,
+      shape,
+      asChild,
+      asIcon,
+      fullWidth,
       startIcon,
       endIcon,
       children,
-      isLoading = false,
+      isLoading,
       disabled,
-      ...props
-    },
-    ref
-  ) => {
+      teste,
+      ...rest
+    } = deepMerge(defaultProps, contextAndInvokedProps);
+
     const Comp = asChild ? Slot : "button";
 
     const { base: buttonClass, loadingIcon: loadingClass } = buttonVariants({
@@ -47,7 +60,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={buttonClass({ className })}
         disabled={disabled}
         ref={ref}
-        {...props}
+        {...rest}
       >
         {startOrLoadingIcon}
         {(isLoading && !asIcon) || !isLoading ? (

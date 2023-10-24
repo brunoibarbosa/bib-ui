@@ -5,15 +5,12 @@ import { Button } from "./Button";
 const meta = {
   title: "Components/Button",
   component: Button,
-  parameters: {
-    layout: "centered",
-  },
   tags: ["autodocs"],
   args: {
     variant: "default",
+    color: "orange",
     shape: "default",
     size: "default",
-    color: "orange",
     asIcon: false,
     disabled: false,
     fullWidth: false,

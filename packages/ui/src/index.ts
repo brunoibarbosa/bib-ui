@@ -1,2 +1,2 @@
-import "./index.css";
-export * from "./components/Button";
+import "./styles/main.css";
+export * from "./components";
