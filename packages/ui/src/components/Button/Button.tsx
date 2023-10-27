@@ -1,6 +1,6 @@
 import { Slot, Slottable } from "@radix-ui/react-slot";
 import { forwardRef } from "react";
-import { deepMerge, getComponentProps } from "../../utils";
+import { deepMerge, getComponentProps, getComponentStyle } from "../../utils";
 import { ButtonProps } from "./Button.types";
 import { buttonVariants } from "./buttonClasses";
 
@@ -18,6 +18,15 @@ const defaultProps = {
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
     const contextAndInvokedProps = getComponentProps("Button", props);
+
+    const mergedProps: ButtonProps = deepMerge(
+      defaultProps,
+      contextAndInvokedProps
+    );
+
+    const contextStyles = getComponentStyle("Button", mergedProps);
+    const rootStyles = contextStyles ? contextStyles.root : {};
+
     const {
       className,
       variant,
@@ -32,9 +41,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       isLoading,
       disabled,
-      teste,
       ...rest
-    } = deepMerge(defaultProps, contextAndInvokedProps);
+    } = mergedProps;
 
     const Comp = asChild ? Slot : "button";
 
@@ -60,6 +68,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={buttonClass({ className })}
         disabled={disabled}
         ref={ref}
+        style={rootStyles}
         {...rest}
       >
         {startOrLoadingIcon}

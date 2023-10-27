@@ -11,6 +11,8 @@ type ButtonSize = "small" | "default" | "large";
 type ButtonVariant = "default" | "transparent" | "text" | "link" | "outline";
 type ButtonShape = "default" | "rounded" | "circle";
 
+export type ButtonSlot = "root";
+
 export interface ButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "color"> {
   asChild?: boolean;

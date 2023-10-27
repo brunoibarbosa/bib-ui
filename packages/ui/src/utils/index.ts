@@ -1,2 +1,2 @@
+export * from "./config";
 export * from "./deepMerge";
-export * from "./getComponentProps";

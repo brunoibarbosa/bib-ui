@@ -1,21 +1,6 @@
 import { createContext } from "react";
-import { BibUIState } from "./Context.types";
+import { UIConfigState } from "./Context.types";
 
-export const BibUIContext = createContext<BibUIState>({
-  components: {
-    Button: {
-      defaultProps: {
-        variant: "default",
-        color: "orange",
-        size: "default",
-        shape: "default",
-        asChild: false,
-        asIcon: false,
-        fullWidth: false,
-        isLoading: false,
-      },
-    },
-  },
-});
+export const UIConfigContext = createContext<UIConfigState>({});
 
-export const BibUIProvider = BibUIContext.Provider;
+export const UIConfigProvider = UIConfigContext.Provider;

@@ -1,10 +1,10 @@
 "use client";
 
-import { BibUIProvider, Button } from "bib-ui";
+import { Button, UIConfigProvider } from "bib-ui";
 
 export default function Home() {
   return (
-    <BibUIProvider
+    <UIConfigProvider
       value={{
         components: {
           Button: {
@@ -12,15 +12,22 @@ export default function Home() {
               color: "blue",
               variant: "link",
             },
+            stylesOverride({ color }) {
+              return {
+                root: {
+                  borderRadius: color === "orange" ? 10 : 20,
+                },
+              };
+            },
           },
         },
       }}
     >
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <Button color="red" shape="rounded" variant="outline">
-          Teste
+          Button
         </Button>
       </main>
-    </BibUIProvider>
+    </UIConfigProvider>
   );
 }

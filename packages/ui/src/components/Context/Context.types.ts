@@ -1,15 +1,18 @@
-import { ButtonProps } from "../Button";
+import { ButtonProps, ButtonSlot } from "../Button";
 
-export interface ComponentConfig<P> {
-  defaultProps: P;
+export interface ComponentConfig<P, S extends string> {
+  defaultProps?: Omit<P, "style">;
+  stylesOverride?: (
+    context: Omit<P, "style">
+  ) => Record<S, React.CSSProperties>;
 }
 
-export interface BibUIComponents {
-  Button?: ComponentConfig<ButtonProps>;
+export interface UIComponents {
+  Button?: ComponentConfig<ButtonProps, ButtonSlot>;
 }
 
-export interface BibUIState {
-  components?: BibUIComponents;
+export interface UIConfigState {
+  components?: UIComponents;
 }
 
-export type BibComponentName = keyof BibUIComponents;
+export type UIComponentName = keyof UIComponents;
