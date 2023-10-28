@@ -1,19 +1,16 @@
 {
-  "name": "bib-ui",
   "private": true,
   "scripts": {
-    "playground": "cd packages/playground && pnpm run dev",
-    "storybook": "lerna run --parallel --stream storybook",
-    "start": "lerna run --parallel --stream start",
-    "build": "lerna run --stream build",
-    "test": "lerna run --stream --no-bail test",
-    "static": "cp -R packages/demo-reactjs/build/ build/ && cp CNAME build/CNAME"
+    "build": "turbo run build",
+    "dev": "turbo run dev --no-cache --continue",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "turbo": "latest"
   },
   "workspaces": [
     "packages/*"
   ],
-  "dependencies": {},
-  "devDependencies": {
-    "lerna": "^7.4.1"
-  }
+  "packageManager": "pnpm@8.6.10"
 }

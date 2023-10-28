@@ -3,9 +3,8 @@
   "private": false,
   "version": "1.0.0",
   "description": "",
-  "type": "module",
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
@@ -53,7 +52,7 @@
       "require": "./dist/index.cjs",
       "import": "./dist/index.js"
     },
-    "./dist/style.css": "./dist/styles/main.css"
+    "./style.css": "./dist/styles/main.css"
   },
   "sideEffects": false,
   "publishConfig": {
