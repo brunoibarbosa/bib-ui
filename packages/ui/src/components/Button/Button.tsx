@@ -1,10 +1,10 @@
 import { Slot, Slottable } from "@radix-ui/react-slot";
 import { forwardRef } from "react";
-import { deepMerge, getComponentProps, getComponentStyle } from "../../utils";
+import { omitProps } from "../../utils";
 import { ButtonProps } from "./Button.types";
-import { buttonVariants } from "./buttonClasses";
+import { LoadingIcon } from "./LoadingIcon.styled";
 
-const defaultProps = {
+export const defaultPropsButton: Partial<ButtonProps> = {
   variant: "default",
   color: "orange",
   size: "default",
@@ -13,64 +13,32 @@ const defaultProps = {
   asIcon: false,
   fullWidth: false,
   isLoading: false,
-} satisfies Partial<ButtonProps>;
+};
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const UnstyledButton = forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
-    const contextAndInvokedProps = getComponentProps("Button", props);
-
-    const mergedProps: ButtonProps = deepMerge(
-      defaultProps,
-      contextAndInvokedProps
-    );
-
-    const contextStyles = getComponentStyle("Button", mergedProps);
-    const rootStyles = contextStyles ? contextStyles.root : {};
-
     const {
-      className,
-      variant,
-      color,
-      size,
-      shape,
       asChild,
       asIcon,
-      fullWidth,
       startIcon,
       endIcon,
       children,
       isLoading,
       disabled,
       ...rest
-    } = mergedProps;
+    } = omitProps(props, ["fullWidth", "shape", "size", "color", "variant"]);
 
     const Comp = asChild ? Slot : "button";
 
-    const { base: buttonClass, loadingIcon: loadingClass } = buttonVariants({
-      variant,
-      size,
-      color,
-      shape,
-      asIcon,
-      isLoading,
-      fullWidth,
-    });
-
-    const loadingIcon = <span className={loadingClass()} />;
-
     const startOrLoadingIcon =
-      !disabled && isLoading
-        ? loadingIcon
-        : startIcon && <div>{startIcon}</div>;
+      !disabled && isLoading ? (
+        <LoadingIcon />
+      ) : (
+        startIcon && <div>{startIcon}</div>
+      );
 
     return (
-      <Comp
-        className={buttonClass({ className })}
-        disabled={disabled}
-        ref={ref}
-        style={rootStyles}
-        {...rest}
-      >
+      <Comp disabled={disabled} {...rest} ref={ref}>
         {startOrLoadingIcon}
         {(isLoading && !asIcon) || !isLoading ? (
           <>
@@ -83,4 +51,4 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 
-Button.displayName = "Button";
+UnstyledButton.displayName = "Button";
