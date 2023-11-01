@@ -1,4 +1,6 @@
 export * from "./animations";
+export * from "./createTheme";
 export * from "./defaultTheme";
 export * from "./globalStyle";
-export * from "./theme";
+export * from "./model";
+export * from "./types";

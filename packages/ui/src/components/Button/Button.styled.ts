@@ -1,20 +1,16 @@
 import Color from "color";
+import { merge } from "lodash";
 import { css, styled } from "styled-components";
-import { deepMerge, getComponentTheme } from "../../utils";
+import { getComponentTheme } from "../../utils";
 import { UnstyledButton } from "./Button";
-import { ButtonProps } from "./Button.types";
 import { LoadingIcon } from "./LoadingIcon.styled";
 
-function ring(colorHex: string) {
-  return `0 0 0 3px ${Color(colorHex).alpha(0.5).toString()}`;
-}
+const ring = (colorToString: string) =>
+  `0 0 0 2px ${Color(colorToString).alpha(0.4).toString()}`;
 
 export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
   const componentTheme = getComponentTheme(theme, "Button");
-  const mergedProps: ButtonProps = deepMerge(
-    componentTheme?.defaultProps,
-    props
-  );
+  const mergedProps = merge(componentTheme?.defaultProps, props);
   const { fullWidth, isLoading, size, shape, color, asIcon, variant } =
     mergedProps;
 
@@ -41,21 +37,21 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
         box-shadow: ${() => {
           switch (color) {
             case "orange":
-              return ring(theme.color.orange[600]);
+              return ring(theme.color("orange", 600));
             case "red":
-              return ring(theme.color.red[600]);
+              return ring(theme.color("red", 600));
             case "green":
-              return ring(theme.color.green[600]);
+              return ring(theme.color("green", 600));
             case "violet":
-              return ring(theme.color.violet[600]);
+              return ring(theme.color("violet", 600));
             case "yellow":
-              return ring(theme.color.yellow[600]);
+              return ring(theme.color("yellow", 600));
             case "blue":
-              return ring(theme.color.blue[600]);
+              return ring(theme.color("blue", 600));
             case "black":
-              return ring(theme.color.black[600]);
+              return ring(theme.color("black", 600));
             case "gray":
-              return ring(theme.color.gray[600]);
+              return ring(theme.color("gray", 600));
           }
         }};
       }
@@ -63,7 +59,7 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
       // Disabled
       &:disabled {
         pointer-events: none;
-        color: ${({ theme }) => theme.color.disabled.dark};
+        color: ${theme.color("disabled", "dark")};
       }
 
       // Full Width
@@ -113,21 +109,13 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
         }
       }}
 
-  // Shape & Size
+  // Shape
   border-radius: ${() => {
         switch (shape) {
           case "rounded":
             return "4px";
-          case "circle": {
-            switch (size) {
-              case "small":
-                return "0.75rem";
-              case "large":
-                return "1.25rem";
-              default:
-                return "1rem";
-            }
-          }
+          case "circle":
+            return "9999px";
           default:
             return 0;
         }
@@ -160,27 +148,27 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
       }}
 
       // Variant
-  ${() => {
+        ${() => {
         switch (variant) {
           case "transparent":
             return css`
-              color: ${({ theme }) => theme.color.black["DEFAULT"]};
+              color: ${theme.color("black", "DEFAULT")};
               &:disabled {
-                background-color: ${({ theme }) => theme.color.disabled.light};
+                background-color: ${theme.color("disabled", "light")};
               }
             `;
           case "text":
             return css`
-              color: ${({ theme }) => theme.color.black["DEFAULT"]};
+              color: ${theme.color("black", "DEFAULT")};
               &:disabled {
-                background-color: ${({ theme }) => theme.color.transparent};
+                background-color: ${theme.color("transparent")};
               }
             `;
           case "link":
             return css`
-              color: ${({ theme }) => theme.color.black["DEFAULT"]};
+              color: ${theme.color("black", "DEFAULT")};
               &:disabled {
-                background-color: ${({ theme }) => theme.color.transparent};
+                background-color: ${theme.color("transparent")};
               }
               &:hover {
                 text-decoration: underline;
@@ -188,18 +176,18 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             `;
           case "outline":
             return css`
-              color: ${({ theme }) => theme.color.black["DEFAULT"]};
+              color: ${theme.color("black", "DEFAULT")};
               border-width: 1px;
               &:disabled {
-                border-color: ${({ theme }) => theme.color.disabled.main};
-                background-color: ${({ theme }) => theme.color.disabled.light};
+                border-color: ${theme.color("disabled", "main")};
+                background-color: ${theme.color("disabled", "light")};
               }
             `;
           default:
             return css`
-              color: ${({ theme }) => theme.color.white};
+              color: ${theme.color("white")};
               &:disabled {
-                background-color: ${({ theme }) => theme.color.disabled.light};
+                background-color: ${theme.color("disabled", "light")};
               }
             `;
         }
@@ -212,137 +200,137 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "orange":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.orange[500]};
+                  border-color: ${theme.color("orange", 500)};
                 }
-                color: ${theme.color.orange[500]};
-                background-color: ${theme.color.transparent};
-                border-color: ${theme.color.orange[500]};
+                color: ${theme.color("orange", 500)};
+                background-color: ${theme.color("transparent")};
+                border-color: ${theme.color("orange", 500)};
                 &:hover {
-                  color: ${theme.color.white};
-                  background-color: ${theme.color.orange[500]};
+                  color: ${theme.color("white")};
+                  background-color: ${theme.color("orange", 500)};
                 }
                 &:active {
-                  border-color: ${theme.color.orange[600]};
-                  background-color: ${theme.color.orange[600]};
+                  border-color: ${theme.color("orange", 600)};
+                  background-color: ${theme.color("orange", 600)};
                 }
               `;
             case "red":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.red[500]};
+                  border-color: ${theme.color("red", 500)};
                 }
-                color: ${theme.color.red[500]};
-                background-color: ${theme.color.transparent};
-                border-color: ${theme.color.red[500]};
+                color: ${theme.color("red", 500)};
+                background-color: ${theme.color("transparent")};
+                border-color: ${theme.color("red", 500)};
                 &:hover {
-                  color: ${theme.color.white};
-                  background-color: ${theme.color.red[500]};
+                  color: ${theme.color("white")};
+                  background-color: ${theme.color("red", 500)};
                 }
                 &:active {
-                  border-color: ${theme.color.red[600]};
-                  background-color: ${theme.color.red[600]};
+                  border-color: ${theme.color("red", 600)};
+                  background-color: ${theme.color("red", 600)};
                 }
               `;
             case "yellow":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.yellow[500]};
+                  border-color: ${theme.color("yellow", 500)};
                 }
-                color: ${theme.color.yellow[500]};
-                background-color: ${theme.color.transparent};
-                border-color: ${theme.color.yellow[500]};
+                color: ${theme.color("yellow", 500)};
+                background-color: ${theme.color("transparent")};
+                border-color: ${theme.color("yellow", 500)};
                 &:hover {
-                  color: ${theme.color.white};
-                  background-color: ${theme.color.yellow[500]};
+                  color: ${theme.color("white")};
+                  background-color: ${theme.color("yellow", 500)};
                 }
                 &:active {
-                  border-color: ${theme.color.yellow[600]};
-                  background-color: ${theme.color.yellow[600]};
+                  border-color: ${theme.color("yellow", 600)};
+                  background-color: ${theme.color("yellow", 600)};
                 }
               `;
             case "green":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.green[500]};
+                  border-color: ${theme.color("green", 500)};
                 }
-                color: ${theme.color.green[500]};
-                background-color: ${theme.color.transparent};
-                border-color: ${theme.color.green[500]};
+                color: ${theme.color("green", 500)};
+                background-color: ${theme.color("transparent")};
+                border-color: ${theme.color("green", 500)};
                 &:hover {
-                  color: ${theme.color.white};
-                  background-color: ${theme.color.green[500]};
+                  color: ${theme.color("white")};
+                  background-color: ${theme.color("green", 500)};
                 }
                 &:active {
-                  border-color: ${theme.color.green[600]};
-                  background-color: ${theme.color.green[600]};
+                  border-color: ${theme.color("green", 600)};
+                  background-color: ${theme.color("green", 600)};
                 }
               `;
             case "violet":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.violet[500]};
+                  border-color: ${theme.color("violet", 500)};
                 }
-                color: ${theme.color.violet[500]};
-                background-color: ${theme.color.transparent};
-                border-color: ${theme.color.violet[500]};
+                color: ${theme.color("violet", 500)};
+                background-color: ${theme.color("transparent")};
+                border-color: ${theme.color("violet", 500)};
                 &:hover {
-                  color: ${theme.color.white};
-                  background-color: ${theme.color.violet[500]};
+                  color: ${theme.color("white")};
+                  background-color: ${theme.color("violet", 500)};
                 }
                 &:active {
-                  border-color: ${theme.color.violet[600]};
-                  background-color: ${theme.color.violet[600]};
+                  border-color: ${theme.color("violet", 600)};
+                  background-color: ${theme.color("violet", 600)};
                 }
               `;
             case "blue":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.blue[500]};
+                  border-color: ${theme.color("blue", 500)};
                 }
-                color: ${theme.color.blue[500]};
-                background-color: ${theme.color.transparent};
-                border-color: ${theme.color.blue[500]};
+                color: ${theme.color("blue", 500)};
+                background-color: ${theme.color("transparent")};
+                border-color: ${theme.color("blue", 500)};
                 &:hover {
-                  color: ${theme.color.white};
-                  background-color: ${theme.color.blue[500]};
+                  color: ${theme.color("white")};
+                  background-color: ${theme.color("blue", 500)};
                 }
                 &:active {
-                  border-color: ${theme.color.blue[600]};
-                  background-color: ${theme.color.blue[600]};
+                  border-color: ${theme.color("blue", 600)};
+                  background-color: ${theme.color("blue", 600)};
                 }
               `;
             case "gray":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.gray[500]};
+                  border-color: ${theme.color("gray", 500)};
                 }
-                color: ${theme.color.gray[500]};
-                background-color: ${theme.color.transparent};
-                border-color: ${theme.color.gray[500]};
+                color: ${theme.color("gray", 500)};
+                background-color: ${theme.color("transparent")};
+                border-color: ${theme.color("gray", 500)};
                 &:hover {
-                  color: ${theme.color.white};
-                  background-color: ${theme.color.gray[500]};
+                  color: ${theme.color("white")};
+                  background-color: ${theme.color("gray", 500)};
                 }
                 &:active {
-                  border-color: ${theme.color.gray[600]};
-                  background-color: ${theme.color.gray[600]};
+                  border-color: ${theme.color("gray", 600)};
+                  background-color: ${theme.color("gray", 600)};
                 }
               `;
             case "black":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.black[500]};
+                  border-color: ${theme.color("black", 500)};
                 }
-                color: ${theme.color.black[500]};
-                background-color: ${theme.color.transparent};
-                border-color: ${theme.color.black[500]};
+                color: ${theme.color("black", 500)};
+                background-color: ${theme.color("transparent")};
+                border-color: ${theme.color("black", 500)};
                 &:hover {
-                  color: ${theme.color.white};
-                  background-color: ${theme.color.black[500]};
+                  color: ${theme.color("white")};
+                  background-color: ${theme.color("black", 500)};
                 }
                 &:active {
-                  border-color: ${theme.color.black[600]};
-                  background-color: ${theme.color.black[600]};
+                  border-color: ${theme.color("black", 600)};
+                  background-color: ${theme.color("black", 600)};
                 }
               `;
           }
@@ -351,89 +339,89 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "orange":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.orange[600]};
+                  border-color: ${theme.color("orange", 600)};
                 }
-                color: ${theme.color.orange[600]};
-                background-color: ${theme.color.transparent};
+                color: ${theme.color("orange", 600)};
+                background-color: ${theme.color("transparent")};
                 &:active {
-                  color: ${theme.color.orange[700]};
+                  color: ${theme.color("orange", 700)};
                 }
               `;
             case "red":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.red[600]};
+                  border-color: ${theme.color("red", 600)};
                 }
-                color: ${theme.color.red[600]};
-                background-color: ${theme.color.transparent};
+                color: ${theme.color("red", 600)};
+                background-color: ${theme.color("transparent")};
                 &:active {
-                  color: ${theme.color.red[700]};
+                  color: ${theme.color("red", 700)};
                 }
               `;
             case "yellow":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.yellow[600]};
+                  border-color: ${theme.color("yellow", 600)};
                 }
-                color: ${theme.color.yellow[600]};
-                background-color: ${theme.color.transparent};
+                color: ${theme.color("yellow", 600)};
+                background-color: ${theme.color("transparent")};
                 &:active {
-                  color: ${theme.color.yellow[700]};
+                  color: ${theme.color("yellow", 700)};
                 }
               `;
             case "green":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.green[600]};
+                  border-color: ${theme.color("green", 600)};
                 }
-                color: ${theme.color.green[600]};
-                background-color: ${theme.color.transparent};
+                color: ${theme.color("green", 600)};
+                background-color: ${theme.color("transparent")};
                 &:active {
-                  color: ${theme.color.green[700]};
+                  color: ${theme.color("green", 700)};
                 }
               `;
             case "violet":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.violet[600]};
+                  border-color: ${theme.color("violet", 600)};
                 }
-                color: ${theme.color.violet[600]};
-                background-color: ${theme.color.transparent};
+                color: ${theme.color("violet", 600)};
+                background-color: ${theme.color("transparent")};
                 &:active {
-                  color: ${theme.color.violet[700]};
+                  color: ${theme.color("violet", 700)};
                 }
               `;
             case "blue":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.blue[600]};
+                  border-color: ${theme.color("blue", 600)};
                 }
-                color: ${theme.color.blue[600]};
-                background-color: ${theme.color.transparent};
+                color: ${theme.color("blue", 600)};
+                background-color: ${theme.color("transparent")};
                 &:active {
-                  color: ${theme.color.blue[700]};
+                  color: ${theme.color("blue", 700)};
                 }
               `;
             case "gray":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.gray[600]};
+                  border-color: ${theme.color("gray", 600)};
                 }
-                color: ${theme.color.gray[600]};
-                background-color: ${theme.color.transparent};
+                color: ${theme.color("gray", 600)};
+                background-color: ${theme.color("transparent")};
                 &:active {
-                  color: ${theme.color.gray[700]};
+                  color: ${theme.color("gray", 700)};
                 }
               `;
             case "black":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.black[600]};
+                  border-color: ${theme.color("black", 600)};
                 }
-                color: ${theme.color.black[800]};
-                background-color: ${theme.color.transparent};
+                color: ${theme.color("black", 800)};
+                background-color: ${theme.color("transparent")};
                 &:active {
-                  color: ${theme.color.black[950]};
+                  color: ${theme.color("black", 950)};
                 }
               `;
           }
@@ -442,17 +430,17 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "orange":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.orange[600]};
+                  border-color: ${theme.color("orange", 600)};
                 }
-                color: ${theme.color.orange[600]};
-                background-color: ${theme.color.transparent};
+                color: ${theme.color("orange", 600)};
+                background-color: ${theme.color("transparent")};
                 &:hover {
-                  background-color: ${Color(theme.color.orange[800])
+                  background-color: ${Color(theme.color("orange", 800))
                     .alpha(0.2)
                     .toString()};
                 }
                 &:active {
-                  background-color: ${Color(theme.color.orange[800])
+                  background-color: ${Color(theme.color("orange", 800))
                     .alpha(0.3)
                     .toString()};
                 }
@@ -460,17 +448,17 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "red":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.red[600]};
+                  border-color: ${theme.color("red", 600)};
                 }
-                color: ${theme.color.red[600]};
-                background-color: ${theme.color.transparent};
+                color: ${theme.color("red", 600)};
+                background-color: ${theme.color("transparent")};
                 &:hover {
-                  background-color: ${Color(theme.color.red[800])
+                  background-color: ${Color(theme.color("red", 800))
                     .alpha(0.2)
                     .toString()};
                 }
                 &:active {
-                  background-color: ${Color(theme.color.red[800])
+                  background-color: ${Color(theme.color("red", 800))
                     .alpha(0.3)
                     .toString()};
                 }
@@ -478,17 +466,17 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "yellow":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.yellow[600]};
+                  border-color: ${theme.color("yellow", 600)};
                 }
-                color: ${theme.color.yellow[600]};
-                background-color: ${theme.color.transparent};
+                color: ${theme.color("yellow", 600)};
+                background-color: ${theme.color("transparent")};
                 &:hover {
-                  background-color: ${Color(theme.color.yellow[600])
+                  background-color: ${Color(theme.color("yellow", 600))
                     .alpha(0.2)
                     .toString()};
                 }
                 &:active {
-                  background-color: ${Color(theme.color.yellow[600])
+                  background-color: ${Color(theme.color("yellow", 600))
                     .alpha(0.3)
                     .toString()};
                 }
@@ -496,17 +484,17 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "green":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.green[600]};
+                  border-color: ${theme.color("green", 600)};
                 }
-                color: ${theme.color.green[600]};
-                background-color: ${theme.color.transparent};
+                color: ${theme.color("green", 600)};
+                background-color: ${theme.color("transparent")};
                 &:hover {
-                  background-color: ${Color(theme.color.green[800])
+                  background-color: ${Color(theme.color("green", 800))
                     .alpha(0.2)
                     .toString()};
                 }
                 &:active {
-                  background-color: ${Color(theme.color.green[800])
+                  background-color: ${Color(theme.color("green", 800))
                     .alpha(0.3)
                     .toString()};
                 }
@@ -514,17 +502,17 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "violet":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.violet[600]};
+                  border-color: ${theme.color("violet", 600)};
                 }
-                color: ${theme.color.violet[600]};
-                background-color: ${theme.color.transparent};
+                color: ${theme.color("violet", 600)};
+                background-color: ${theme.color("transparent")};
                 &:hover {
-                  background-color: ${Color(theme.color.violet[800])
+                  background-color: ${Color(theme.color("violet", 800))
                     .alpha(0.2)
                     .toString()};
                 }
                 &:active {
-                  background-color: ${Color(theme.color.violet[800])
+                  background-color: ${Color(theme.color("violet", 800))
                     .alpha(0.3)
                     .toString()};
                 }
@@ -532,17 +520,17 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "blue":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.blue[600]};
+                  border-color: ${theme.color("blue", 600)};
                 }
-                color: ${theme.color.blue[600]};
-                background-color: ${theme.color.transparent};
+                color: ${theme.color("blue", 600)};
+                background-color: ${theme.color("transparent")};
                 &:hover {
-                  background-color: ${Color(theme.color.blue[800])
+                  background-color: ${Color(theme.color("blue", 800))
                     .alpha(0.2)
                     .toString()};
                 }
                 &:active {
-                  background-color: ${Color(theme.color.blue[800])
+                  background-color: ${Color(theme.color("blue", 800))
                     .alpha(0.3)
                     .toString()};
                 }
@@ -550,17 +538,17 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "gray":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.gray[600]};
+                  border-color: ${theme.color("gray", 600)};
                 }
-                color: ${theme.color.gray[600]};
-                background-color: ${theme.color.transparent};
+                color: ${theme.color("gray", 600)};
+                background-color: ${theme.color("transparent")};
                 &:hover {
-                  background-color: ${Color(theme.color.gray[800])
+                  background-color: ${Color(theme.color("gray", 800))
                     .alpha(0.2)
                     .toString()};
                 }
                 &:active {
-                  background-color: ${Color(theme.color.gray[800])
+                  background-color: ${Color(theme.color("gray", 800))
                     .alpha(0.3)
                     .toString()};
                 }
@@ -568,17 +556,17 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "black":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.black[600]};
+                  border-color: ${theme.color("black", 600)};
                 }
-                color: ${theme.color.black[600]};
-                background-color: ${theme.color.transparent};
+                color: ${theme.color("black", 600)};
+                background-color: ${theme.color("transparent")};
                 &:hover {
-                  background-color: ${Color(theme.color.black[800])
+                  background-color: ${Color(theme.color("black", 800))
                     .alpha(0.2)
                     .toString()};
                 }
                 &:active {
-                  background-color: ${Color(theme.color.black[800])
+                  background-color: ${Color(theme.color("black", 800))
                     .alpha(0.3)
                     .toString()};
                 }
@@ -589,19 +577,19 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "orange":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.orange[600]};
+                  border-color: ${theme.color("orange", 600)};
                 }
-                color: ${theme.color.orange[600]};
-                background-color: ${Color(theme.color.orange[800])
+                color: ${theme.color("orange", 600)};
+                background-color: ${Color(theme.color("orange", 800))
                   .alpha(0.15)
                   .toString()};
                 &:hover {
-                  background-color: ${Color(theme.color.orange[800])
+                  background-color: ${Color(theme.color("orange", 800))
                     .alpha(0.3)
                     .toString()};
                 }
                 &:active {
-                  background-color: ${Color(theme.color.orange[800])
+                  background-color: ${Color(theme.color("orange", 800))
                     .alpha(0.4)
                     .toString()};
                 }
@@ -609,19 +597,19 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "red":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.red[600]};
+                  border-color: ${theme.color("red", 600)};
                 }
-                color: ${theme.color.red[600]};
-                background-color: ${Color(theme.color.red[800])
+                color: ${theme.color("red", 600)};
+                background-color: ${Color(theme.color("red", 800))
                   .alpha(0.15)
                   .toString()};
                 &:hover {
-                  background-color: ${Color(theme.color.red[800])
+                  background-color: ${Color(theme.color("red", 800))
                     .alpha(0.3)
                     .toString()};
                 }
                 &:active {
-                  background-color: ${Color(theme.color.red[800])
+                  background-color: ${Color(theme.color("red", 800))
                     .alpha(0.4)
                     .toString()};
                 }
@@ -629,19 +617,19 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "yellow":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.yellow[600]};
+                  border-color: ${theme.color("yellow", 600)};
                 }
-                color: ${theme.color.yellow[600]};
-                background-color: ${Color(theme.color.yellow[800])
+                color: ${theme.color("yellow", 600)};
+                background-color: ${Color(theme.color("yellow", 800))
                   .alpha(0.15)
                   .toString()};
                 &:hover {
-                  background-color: ${Color(theme.color.yellow[800])
+                  background-color: ${Color(theme.color("yellow", 800))
                     .alpha(0.3)
                     .toString()};
                 }
                 &:active {
-                  background-color: ${Color(theme.color.yellow[800])
+                  background-color: ${Color(theme.color("yellow", 800))
                     .alpha(0.4)
                     .toString()};
                 }
@@ -649,19 +637,19 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "green":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.green[600]};
+                  border-color: ${theme.color("green", 600)};
                 }
-                color: ${theme.color.green[600]};
-                background-color: ${Color(theme.color.green[800])
+                color: ${theme.color("green", 600)};
+                background-color: ${Color(theme.color("green", 800))
                   .alpha(0.15)
                   .toString()};
                 &:hover {
-                  background-color: ${Color(theme.color.green[800])
+                  background-color: ${Color(theme.color("green", 800))
                     .alpha(0.3)
                     .toString()};
                 }
                 &:active {
-                  background-color: ${Color(theme.color.green[800])
+                  background-color: ${Color(theme.color("green", 800))
                     .alpha(0.4)
                     .toString()};
                 }
@@ -669,19 +657,19 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "violet":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.violet[600]};
+                  border-color: ${theme.color("violet", 600)};
                 }
-                color: ${theme.color.violet[600]};
-                background-color: ${Color(theme.color.violet[800])
+                color: ${theme.color("violet", 600)};
+                background-color: ${Color(theme.color("violet", 800))
                   .alpha(0.15)
                   .toString()};
                 &:hover {
-                  background-color: ${Color(theme.color.violet[800])
+                  background-color: ${Color(theme.color("violet", 800))
                     .alpha(0.3)
                     .toString()};
                 }
                 &:active {
-                  background-color: ${Color(theme.color.violet[800])
+                  background-color: ${Color(theme.color("violet", 800))
                     .alpha(0.4)
                     .toString()};
                 }
@@ -689,19 +677,19 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "blue":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.blue[600]};
+                  border-color: ${theme.color("blue", 600)};
                 }
-                color: ${theme.color.blue[600]};
-                background-color: ${Color(theme.color.blue[800])
+                color: ${theme.color("blue", 600)};
+                background-color: ${Color(theme.color("blue", 800))
                   .alpha(0.15)
                   .toString()};
                 &:hover {
-                  background-color: ${Color(theme.color.blue[800])
+                  background-color: ${Color(theme.color("blue", 800))
                     .alpha(0.3)
                     .toString()};
                 }
                 &:active {
-                  background-color: ${Color(theme.color.blue[800])
+                  background-color: ${Color(theme.color("blue", 800))
                     .alpha(0.4)
                     .toString()};
                 }
@@ -709,19 +697,19 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "gray":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.gray[600]};
+                  border-color: ${theme.color("gray", 600)};
                 }
-                color: ${theme.color.gray[600]};
-                background-color: ${Color(theme.color.gray[800])
+                color: ${theme.color("gray", 600)};
+                background-color: ${Color(theme.color("gray", 800))
                   .alpha(0.15)
                   .toString()};
                 &:hover {
-                  background-color: ${Color(theme.color.gray[800])
+                  background-color: ${Color(theme.color("gray", 800))
                     .alpha(0.3)
                     .toString()};
                 }
                 &:active {
-                  background-color: ${Color(theme.color.gray[800])
+                  background-color: ${Color(theme.color("gray", 800))
                     .alpha(0.4)
                     .toString()};
                 }
@@ -729,19 +717,19 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
             case "black":
               return css`
                 ${LoadingIcon} {
-                  border-color: ${theme.color.black[600]};
+                  border-color: ${theme.color("black", 600)};
                 }
-                color: ${theme.color.black[600]};
-                background-color: ${Color(theme.color.black[800])
+                color: ${theme.color("black", 600)};
+                background-color: ${Color(theme.color("black", 800))
                   .alpha(0.15)
                   .toString()};
                 &:hover {
-                  background-color: ${Color(theme.color.black[800])
+                  background-color: ${Color(theme.color("black", 800))
                     .alpha(0.3)
                     .toString()};
                 }
                 &:active {
-                  background-color: ${Color(theme.color.black[800])
+                  background-color: ${Color(theme.color("black", 800))
                     .alpha(0.4)
                     .toString()};
                 }
@@ -751,90 +739,90 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
           switch (color) {
             case "orange":
               return css`
-                background-color: ${theme.color.orange[500]};
-                color: ${theme.color.white};
+                background-color: ${theme.color("orange", 500)};
+                color: ${theme.color("white")};
                 &:hover {
-                  background-color: ${theme.color.orange[600]};
+                  background-color: ${theme.color("orange", 600)};
                 }
                 &:active {
-                  background-color: ${theme.color.orange[700]};
+                  background-color: ${theme.color("orange", 700)};
                 }
               `;
             case "red":
               return css`
-                background-color: ${theme.color.red[500]};
-                color: ${theme.color.white};
+                background-color: ${theme.color("red", 500)};
+                color: ${theme.color("white")};
                 &:hover {
-                  background-color: ${theme.color.red[600]};
+                  background-color: ${theme.color("red", 600)};
                 }
                 &:active {
-                  background-color: ${theme.color.red[700]};
+                  background-color: ${theme.color("red", 700)};
                 }
               `;
             case "yellow":
               return css`
-                background-color: ${theme.color.yellow[500]};
-                color: ${theme.color.white};
+                background-color: ${theme.color("yellow", 500)};
+                color: ${theme.color("white")};
                 &:hover {
-                  background-color: ${theme.color.yellow[600]};
+                  background-color: ${theme.color("yellow", 600)};
                 }
                 &:active {
-                  background-color: ${theme.color.yellow[700]};
+                  background-color: ${theme.color("yellow", 700)};
                 }
               `;
             case "green":
               return css`
-                background-color: ${theme.color.green[600]};
-                color: ${theme.color.white};
+                background-color: ${theme.color("green", 600)};
+                color: ${theme.color("white")};
                 &:hover {
-                  background-color: ${theme.color.green[700]};
+                  background-color: ${theme.color("green", 700)};
                 }
                 &:active {
-                  background-color: ${theme.color.green[800]};
+                  background-color: ${theme.color("green", 800)};
                 }
               `;
             case "violet":
               return css`
-                background-color: ${theme.color.violet[500]};
-                color: ${theme.color.white};
+                background-color: ${theme.color("violet", 500)};
+                color: ${theme.color("white")};
                 &:hover {
-                  background-color: ${theme.color.violet[600]};
+                  background-color: ${theme.color("violet", 600)};
                 }
                 &:active {
-                  background-color: ${theme.color.violet[700]};
+                  background-color: ${theme.color("violet", 700)};
                 }
               `;
             case "blue":
               return css`
-                background-color: ${theme.color.blue[600]};
-                color: ${theme.color.white};
+                background-color: ${theme.color("blue", 600)};
+                color: ${theme.color("white")};
                 &:hover {
-                  background-color: ${theme.color.blue[700]};
+                  background-color: ${theme.color("blue", 700)};
                 }
                 &:active {
-                  background-color: ${theme.color.blue[800]};
+                  background-color: ${theme.color("blue", 800)};
                 }
               `;
             case "gray":
               return css`
-                background-color: ${theme.color.gray[600]};
-                color: ${theme.color.white};
+                background-color: ${theme.color("gray", 600)};
+                color: ${theme.color("white")};
                 &:hover {
-                  background-color: ${theme.color.gray[700]};
+                  background-color: ${theme.color("gray", 700)};
                 }
                 &:active {
-                  background-color: ${theme.color.gray[800]};
+                  background-color: ${theme.color("gray", 800)};
                 }
               `;
             case "black":
               return css`
-                background-color: ${theme.color.black[800]};
-                color: ${theme.color.white};
+                background-color: ${theme.color("black", 800)};
+                color: ${theme.color("white")};
                 &:hover {
-                  background-color: ${theme.color.black[900]};
+                  background-color: ${theme.color("black", 900)};
                 }
                 &:active {
-                  background-color: ${theme.color.black[950]};
+                  background-color: ${theme.color("black", 950)};
                 }
               `;
           }

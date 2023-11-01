@@ -1,4 +1,4 @@
-import { UITheme } from "../styles";
+import { UITheme } from "../theme";
 
 export function omitProps<T extends Record<string, any>>(
   props: T,
@@ -17,7 +17,7 @@ export function omitProps<T extends Record<string, any>>(
 
 export function getComponentTheme<T extends UITheme>(
   theme: T,
-  componentName: keyof T["component"]
+  componentName: keyof T["components"]
 ) {
-  return theme.component[componentName as keyof typeof theme.component];
+  return theme.components[componentName as keyof typeof theme.components];
 }
