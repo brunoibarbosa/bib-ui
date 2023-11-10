@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <UIConfigProvider theme={myTheme}>
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <Button color="violet" variant="default" shape="rounded">
+        <Button color="violet" variant="default">
           TESTE
         </Button>
       </main>
