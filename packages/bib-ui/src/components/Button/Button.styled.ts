@@ -7,9 +7,6 @@ import { getComponentTheme } from "../../utils";
 import { UnstyledButton } from "./Button";
 import { LoadingIcon } from "./LoadingIcon.styled";
 
-const ring = (colorToString: string) =>
-  `0 0 0 2px ${Color(colorToString).alpha(0.4).toString()}`;
-
 export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
   const componentTheme = getComponentTheme(theme, "Button");
   const mergedProps = merge(componentTheme?.defaultProps, props);
@@ -36,26 +33,8 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
 
       &:focus-visible {
         outline: none;
-        box-shadow: ${() => {
-          switch (color) {
-            case "orange":
-              return ring(theme.color("orange", 600));
-            case "red":
-              return ring(theme.color("red", 600));
-            case "green":
-              return ring(theme.color("green", 600));
-            case "violet":
-              return ring(theme.color("violet", 600));
-            case "yellow":
-              return ring(theme.color("yellow", 600));
-            case "blue":
-              return ring(theme.color("blue", 600));
-            case "black":
-              return ring(theme.color("black", 600));
-            case "gray":
-              return ring(theme.color("gray", 600));
-          }
-        }};
+        box-shadow: inset 0 0 0 2px rgba(250, 250, 250, 0.4);
+        transition: box-shadow 100ms;
       }
 
       // Disabled
