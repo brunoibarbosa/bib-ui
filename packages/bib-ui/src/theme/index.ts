@@ -1,3 +1,4 @@
+export * from "./ThemeProvider";
 export * from "./animations";
 export * from "./createTheme";
 export * from "./defaultTheme";

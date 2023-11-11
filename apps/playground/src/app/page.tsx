@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, UIConfigProvider, createTheme } from "bib-ui";
+import { Button, ThemeProvider, createTheme } from "bib-ui";
 
 const myTheme = createTheme({
   colors: {
@@ -10,12 +10,12 @@ const myTheme = createTheme({
 
 export default function Home() {
   return (
-    <UIConfigProvider theme={myTheme}>
+    <ThemeProvider theme={myTheme}>
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <Button color="violet" variant="default">
           TESTE
         </Button>
       </main>
-    </UIConfigProvider>
+    </ThemeProvider>
   );
 }
