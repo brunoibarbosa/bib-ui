@@ -1,3 +1,5 @@
+"use client";
+
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
 import { GlobalStyle, UITheme } from ".";
 

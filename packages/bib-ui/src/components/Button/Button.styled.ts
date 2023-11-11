@@ -1,3 +1,5 @@
+"use client";
+
 import Color from "color";
 import { merge } from "lodash";
 import { css, styled } from "styled-components";
