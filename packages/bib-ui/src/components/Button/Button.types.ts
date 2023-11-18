@@ -10,6 +10,7 @@ type ButtonColor =
 type ButtonSize = "small" | "default" | "large";
 type ButtonVariant = "default" | "transparent" | "text" | "link" | "outline";
 type ButtonShape = "default" | "rounded" | "circle";
+type ButtonTheme = "dark" | "light";
 
 export type ButtonSlot = "root";
 
@@ -25,4 +26,5 @@ export interface ButtonProps
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
   fullWidth?: boolean;
+  themeMode?: ButtonTheme;
 }

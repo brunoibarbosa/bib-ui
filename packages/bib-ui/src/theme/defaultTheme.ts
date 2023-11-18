@@ -1,16 +1,24 @@
-import { defaultColors } from "../tokens";
-import { defaultPropsButton } from "./defaultProps";
-import { UIThemeConstructorProps } from "./types";
+import { getDefaultColors } from "../tokens";
+import { getDefaultPropsButton } from "./defaultProps";
+import { PaletteTheme, UIThemeConstructorProps } from "./types";
 
-export const defaultThemeProps = {
-  colors: defaultColors,
-  typography: {
-    fontSize: 16,
-  },
-  spacing: (factor) => `${0.25 * factor}rem`,
-  components: {
-    Button: {
-      defaultProps: defaultPropsButton,
+export const getDefaultThemeProps = ({
+  mode,
+}: {
+  mode: PaletteTheme["mode"];
+}) =>
+  ({
+    palette: {
+      mode: "light",
+      colors: getDefaultColors(),
     },
-  },
-} satisfies UIThemeConstructorProps;
+    typography: {
+      fontSize: 16,
+    },
+    spacing: (factor) => `${0.25 * factor}rem`,
+    components: {
+      Button: {
+        defaultProps: getDefaultPropsButton(mode),
+      },
+    },
+  } satisfies UIThemeConstructorProps);
