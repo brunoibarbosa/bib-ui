@@ -32,13 +32,12 @@ export const StyledInput = styled(UnstyledInput)(({ theme, ...props }) => {
         ? theme.color("text", 50)
         : theme.color("text", 950)};
 
-      &:focus-visible {
-        box-shadow: 0 0 0 1px
-          ${Color(
-            isDarkTheme ? theme.color("text", 50) : theme.color("text", 950)
-          )
-            .alpha(0.15)
-            .toString()};
+      &:focus {
+        border-color: ${Color(
+          isDarkTheme ? theme.color("text", 50) : theme.color("text", 950)
+        )
+          .alpha(0.4)
+          .toString()};
         transition: box-shadow 100ms;
       }
 
