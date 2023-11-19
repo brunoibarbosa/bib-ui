@@ -4,7 +4,7 @@ import { InputProps } from "./Input.types";
 
 export const UnstyledInput = forwardRef<HTMLInputElement, InputProps>(
   (props, forwardedRef) => {
-    const { ...rest } = omit(props, ["size", "themeMode"]);
+    const { ...rest } = omit(props, ["size", "themeMode", "color"]);
 
     return <input {...rest} ref={forwardedRef} />;
   }

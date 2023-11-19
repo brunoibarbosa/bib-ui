@@ -7,7 +7,7 @@ export default function Home() {
         Button
       </Button>
       <div className="my-4" />
-      <Input />
+      <Input color="orange" />
     </main>
   );
 }
