@@ -1,6 +1,6 @@
 import { Slot, Slottable } from "@radix-ui/react-slot";
+import { omit } from "lodash";
 import { forwardRef } from "react";
-import { omitProps } from "../../utils";
 import { ButtonProps } from "./Button.types";
 import { LoadingIcon } from "./LoadingIcon";
 
@@ -15,7 +15,7 @@ export const UnstyledButton = forwardRef<HTMLButtonElement, ButtonProps>(
       isLoading,
       disabled,
       ...rest
-    } = omitProps(props, [
+    } = omit(props, [
       "fullWidth",
       "shape",
       "size",

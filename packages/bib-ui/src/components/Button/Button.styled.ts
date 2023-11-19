@@ -1,5 +1,3 @@
-"use client";
-
 import Color from "color";
 import { merge } from "lodash";
 import { css, styled } from "styled-components";
@@ -45,7 +43,7 @@ export const StyledButton = styled(UnstyledButton)(({ theme, ...props }) => {
 
       &:focus-visible {
         outline: none;
-        box-shadow: inset 0 0 0 2px rgba(250, 250, 250, 0.4);
+        box-shadow: 0 0 0 2px rgba(250, 250, 250, 0.4);
         transition: box-shadow 100ms;
       }
 
