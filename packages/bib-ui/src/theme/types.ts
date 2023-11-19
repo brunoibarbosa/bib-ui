@@ -1,3 +1,4 @@
+import { InputProps } from "src/components/Input";
 import { RuleSet } from "styled-components";
 import { ButtonProps } from "../components";
 
@@ -53,6 +54,10 @@ export interface ComponentTheme {
   Button: Partial<{
     defaultProps: Partial<ButtonProps>;
     styleOverride: (props: ButtonProps, theme: UITheme) => RuleSet<object>;
+  }>;
+  Input: Partial<{
+    defaultProps: Partial<InputProps>;
+    styleOverride: (props: InputProps, theme: UITheme) => RuleSet<object>;
   }>;
 }
 

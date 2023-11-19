@@ -1,5 +1,5 @@
 import { getDefaultColors } from "../tokens";
-import { getDefaultPropsButton } from "./defaultProps";
+import { getDefaultPropsButton, getDefaultPropsInput } from "./defaultProps";
 import { PaletteTheme, UIThemeConstructorProps } from "./types";
 
 export const getDefaultThemeProps = ({
@@ -19,6 +19,9 @@ export const getDefaultThemeProps = ({
     components: {
       Button: {
         defaultProps: getDefaultPropsButton(mode),
+      },
+      Input: {
+        defaultProps: getDefaultPropsInput(mode),
       },
     },
   } satisfies UIThemeConstructorProps);

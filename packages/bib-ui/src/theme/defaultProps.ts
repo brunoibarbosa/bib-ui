@@ -1,4 +1,4 @@
-import { ButtonProps } from "../components";
+import { ButtonProps, InputProps } from "../components";
 import { PaletteTheme } from "./types";
 
 export function getDefaultPropsButton(
@@ -13,6 +13,15 @@ export function getDefaultPropsButton(
     asIcon: false,
     fullWidth: false,
     isLoading: false,
+    themeMode: mode,
+  };
+}
+
+export function getDefaultPropsInput(
+  mode: PaletteTheme["mode"]
+): Partial<InputProps> {
+  return {
+    size: "default",
     themeMode: mode,
   };
 }
