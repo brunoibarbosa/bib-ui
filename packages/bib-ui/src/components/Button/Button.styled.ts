@@ -43,8 +43,11 @@ export const StyledButton = styled(UnstyledButton)(({ theme, ...props }) => {
 
       &:focus-visible {
         outline: none;
-        box-shadow: 0 0 0 2px rgba(250, 250, 250, 0.4);
         transition: box-shadow 100ms;
+        box-shadow: 0 0 0 2px
+          ${Color(theme.color(color, 500))
+            .alpha(isDarkTheme ? 0.2 : 0.3)
+            .toString()};
       }
 
       // Disabled
