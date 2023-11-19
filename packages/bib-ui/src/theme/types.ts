@@ -1,3 +1,4 @@
+import { InputProps } from "src/components/Input";
 import { RuleSet } from "styled-components";
 import { ButtonProps } from "../components";
 
@@ -36,6 +37,7 @@ export interface ColorTheme {
   blue: UIColor;
   gray: UIColor;
   black: UIColor;
+  text: UIColor;
   transparent: UIColor;
   current: UIColor;
   white: UIColor;
@@ -52,6 +54,10 @@ export interface ComponentTheme {
   Button: Partial<{
     defaultProps: Partial<ButtonProps>;
     styleOverride: (props: ButtonProps, theme: UITheme) => RuleSet<object>;
+  }>;
+  Input: Partial<{
+    defaultProps: Partial<InputProps>;
+    styleOverride: (props: InputProps, theme: UITheme) => RuleSet<object>;
   }>;
 }
 
@@ -70,8 +76,13 @@ export interface UITheme {
   components: Partial<ComponentTheme>;
 }
 
-export interface UIThemeConstructorProps {
+export interface PaletteTheme {
+  mode: "dark" | "light";
   colors: ColorTheme;
+}
+
+export interface UIThemeConstructorProps {
+  palette: PaletteTheme;
   spacing: SpacingTheme;
   components: Partial<ComponentTheme>;
   typography: TypographyTheme;

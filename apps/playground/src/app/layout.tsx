@@ -20,9 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" className={montserrat.className}>
-      <body>
-        <ThemeClient>{children}</ThemeClient>
-      </body>
+      <ThemeClient>{children}</ThemeClient>
     </html>
   );
 }

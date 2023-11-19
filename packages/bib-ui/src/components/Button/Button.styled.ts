@@ -1,17 +1,25 @@
-"use client";
-
 import Color from "color";
 import { merge } from "lodash";
 import { css, styled } from "styled-components";
 import { getComponentTheme } from "../../utils";
-import { UnstyledButton } from "./Button";
-import { LoadingIcon } from "./LoadingIcon.styled";
+import { UnstyledButton } from "./Button.unstyled";
+import { LoadingIcon } from "./LoadingIcon";
 
-export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
+export const StyledButton = styled(UnstyledButton)(({ theme, ...props }) => {
   const componentTheme = getComponentTheme(theme, "Button");
   const mergedProps = merge(componentTheme?.defaultProps, props);
-  const { fullWidth, isLoading, size, shape, color, asIcon, variant } =
-    mergedProps;
+  const {
+    fullWidth,
+    isLoading,
+    size,
+    shape,
+    color = "orange",
+    asIcon,
+    variant,
+    themeMode,
+  } = mergedProps;
+
+  const isDarkTheme = themeMode === "dark";
 
   const stylesOverrided = componentTheme?.styleOverride
     ? componentTheme.styleOverride(mergedProps, theme)
@@ -25,16 +33,21 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
       gap: 0.5rem;
       white-space: nowrap;
       font-size: 0.875rem;
-      font-weight: 600;
+      font-weight: 500;
       transition-property: color, background-color, border-color,
         text-decoration-color, fill, stroke;
       transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
       transition-duration: 150ms;
+      border-width: 1px;
+      border-color: ${theme.color("transparent")};
 
       &:focus-visible {
         outline: none;
-        box-shadow: inset 0 0 0 2px rgba(250, 250, 250, 0.4);
         transition: box-shadow 100ms;
+        box-shadow: 0 0 0 2px
+          ${Color(theme.color(color, 500))
+            .alpha(isDarkTheme ? 0.2 : 0.3)
+            .toString()};
       }
 
       // Disabled
@@ -50,7 +63,7 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
       `}
 
       // isLoading
-  ${isLoading &&
+      ${isLoading &&
       css`
         opacity: 60%;
         &:disabled {
@@ -60,8 +73,8 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
         pointer-events: none;
       `}
 
-  // Size
-  ${() => {
+      // Size
+      ${() => {
         switch (size) {
           case "small":
             return css`
@@ -90,8 +103,8 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
         }
       }}
 
-  // Shape
-  border-radius: ${() => {
+      // Shape
+      border-radius: ${() => {
         switch (shape) {
           case "rounded":
             return "4px";
@@ -128,8 +141,8 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
         }
       }}
 
-      // Variant
-        ${() => {
+      // Variant & Disabled
+      ${() => {
         switch (variant) {
           case "transparent":
             return css`
@@ -158,7 +171,6 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
           case "outline":
             return css`
               color: ${theme.color("black", "DEFAULT")};
-              border-width: 1px;
               &:disabled {
                 border-color: ${theme.color("disabled", "main")};
                 background-color: ${theme.color("disabled", "light")};
@@ -174,639 +186,86 @@ export const Button = styled(UnstyledButton)(({ theme, ...props }) => {
         }
       }}
 
-// Color & Variant
-  ${() => {
-        if (variant === "outline") {
-          switch (color) {
-            case "orange":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("orange", 500)};
-                }
-                color: ${theme.color("orange", 500)};
-                background-color: ${theme.color("transparent")};
-                border-color: ${theme.color("orange", 500)};
-                &:hover {
-                  color: ${theme.color("white")};
-                  background-color: ${theme.color("orange", 500)};
-                }
-                &:active {
-                  border-color: ${theme.color("orange", 600)};
-                  background-color: ${theme.color("orange", 600)};
-                }
-              `;
-            case "red":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("red", 500)};
-                }
-                color: ${theme.color("red", 500)};
-                background-color: ${theme.color("transparent")};
-                border-color: ${theme.color("red", 500)};
-                &:hover {
-                  color: ${theme.color("white")};
-                  background-color: ${theme.color("red", 500)};
-                }
-                &:active {
-                  border-color: ${theme.color("red", 600)};
-                  background-color: ${theme.color("red", 600)};
-                }
-              `;
-            case "yellow":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("yellow", 500)};
-                }
-                color: ${theme.color("yellow", 500)};
-                background-color: ${theme.color("transparent")};
-                border-color: ${theme.color("yellow", 500)};
-                &:hover {
-                  color: ${theme.color("white")};
-                  background-color: ${theme.color("yellow", 500)};
-                }
-                &:active {
-                  border-color: ${theme.color("yellow", 600)};
-                  background-color: ${theme.color("yellow", 600)};
-                }
-              `;
-            case "green":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("green", 500)};
-                }
-                color: ${theme.color("green", 500)};
-                background-color: ${theme.color("transparent")};
-                border-color: ${theme.color("green", 500)};
-                &:hover {
-                  color: ${theme.color("white")};
-                  background-color: ${theme.color("green", 500)};
-                }
-                &:active {
-                  border-color: ${theme.color("green", 600)};
-                  background-color: ${theme.color("green", 600)};
-                }
-              `;
-            case "violet":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("violet", 500)};
-                }
-                color: ${theme.color("violet", 500)};
-                background-color: ${theme.color("transparent")};
-                border-color: ${theme.color("violet", 500)};
-                &:hover {
-                  color: ${theme.color("white")};
-                  background-color: ${theme.color("violet", 500)};
-                }
-                &:active {
-                  border-color: ${theme.color("violet", 600)};
-                  background-color: ${theme.color("violet", 600)};
-                }
-              `;
-            case "blue":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("blue", 500)};
-                }
-                color: ${theme.color("blue", 500)};
-                background-color: ${theme.color("transparent")};
-                border-color: ${theme.color("blue", 500)};
-                &:hover {
-                  color: ${theme.color("white")};
-                  background-color: ${theme.color("blue", 500)};
-                }
-                &:active {
-                  border-color: ${theme.color("blue", 600)};
-                  background-color: ${theme.color("blue", 600)};
-                }
-              `;
-            case "gray":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("gray", 500)};
-                }
-                color: ${theme.color("gray", 500)};
-                background-color: ${theme.color("transparent")};
-                border-color: ${theme.color("gray", 500)};
-                &:hover {
-                  color: ${theme.color("white")};
-                  background-color: ${theme.color("gray", 500)};
-                }
-                &:active {
-                  border-color: ${theme.color("gray", 600)};
-                  background-color: ${theme.color("gray", 600)};
-                }
-              `;
-            case "black":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("black", 500)};
-                }
-                color: ${theme.color("black", 500)};
-                background-color: ${theme.color("transparent")};
-                border-color: ${theme.color("black", 500)};
-                &:hover {
-                  color: ${theme.color("white")};
-                  background-color: ${theme.color("black", 500)};
-                }
-                &:active {
-                  border-color: ${theme.color("black", 600)};
-                  background-color: ${theme.color("black", 600)};
-                }
-              `;
-          }
-        } else if (variant === "link") {
-          switch (color) {
-            case "orange":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("orange", 600)};
-                }
-                color: ${theme.color("orange", 600)};
-                background-color: ${theme.color("transparent")};
-                &:active {
-                  color: ${theme.color("orange", 700)};
-                }
-              `;
-            case "red":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("red", 600)};
-                }
-                color: ${theme.color("red", 600)};
-                background-color: ${theme.color("transparent")};
-                &:active {
-                  color: ${theme.color("red", 700)};
-                }
-              `;
-            case "yellow":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("yellow", 600)};
-                }
-                color: ${theme.color("yellow", 600)};
-                background-color: ${theme.color("transparent")};
-                &:active {
-                  color: ${theme.color("yellow", 700)};
-                }
-              `;
-            case "green":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("green", 600)};
-                }
-                color: ${theme.color("green", 600)};
-                background-color: ${theme.color("transparent")};
-                &:active {
-                  color: ${theme.color("green", 700)};
-                }
-              `;
-            case "violet":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("violet", 600)};
-                }
-                color: ${theme.color("violet", 600)};
-                background-color: ${theme.color("transparent")};
-                &:active {
-                  color: ${theme.color("violet", 700)};
-                }
-              `;
-            case "blue":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("blue", 600)};
-                }
-                color: ${theme.color("blue", 600)};
-                background-color: ${theme.color("transparent")};
-                &:active {
-                  color: ${theme.color("blue", 700)};
-                }
-              `;
-            case "gray":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("gray", 600)};
-                }
-                color: ${theme.color("gray", 600)};
-                background-color: ${theme.color("transparent")};
-                &:active {
-                  color: ${theme.color("gray", 700)};
-                }
-              `;
-            case "black":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("black", 600)};
-                }
-                color: ${theme.color("black", 800)};
-                background-color: ${theme.color("transparent")};
-                &:active {
-                  color: ${theme.color("black", 950)};
-                }
-              `;
-          }
-        } else if (variant === "text") {
-          switch (color) {
-            case "orange":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("orange", 600)};
-                }
-                color: ${theme.color("orange", 600)};
-                background-color: ${theme.color("transparent")};
-                &:hover {
-                  background-color: ${Color(theme.color("orange", 800))
-                    .alpha(0.2)
-                    .toString()};
-                }
-                &:active {
-                  background-color: ${Color(theme.color("orange", 800))
-                    .alpha(0.3)
-                    .toString()};
-                }
-              `;
-            case "red":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("red", 600)};
-                }
-                color: ${theme.color("red", 600)};
-                background-color: ${theme.color("transparent")};
-                &:hover {
-                  background-color: ${Color(theme.color("red", 800))
-                    .alpha(0.2)
-                    .toString()};
-                }
-                &:active {
-                  background-color: ${Color(theme.color("red", 800))
-                    .alpha(0.3)
-                    .toString()};
-                }
-              `;
-            case "yellow":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("yellow", 600)};
-                }
-                color: ${theme.color("yellow", 600)};
-                background-color: ${theme.color("transparent")};
-                &:hover {
-                  background-color: ${Color(theme.color("yellow", 600))
-                    .alpha(0.2)
-                    .toString()};
-                }
-                &:active {
-                  background-color: ${Color(theme.color("yellow", 600))
-                    .alpha(0.3)
-                    .toString()};
-                }
-              `;
-            case "green":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("green", 600)};
-                }
-                color: ${theme.color("green", 600)};
-                background-color: ${theme.color("transparent")};
-                &:hover {
-                  background-color: ${Color(theme.color("green", 800))
-                    .alpha(0.2)
-                    .toString()};
-                }
-                &:active {
-                  background-color: ${Color(theme.color("green", 800))
-                    .alpha(0.3)
-                    .toString()};
-                }
-              `;
-            case "violet":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("violet", 600)};
-                }
-                color: ${theme.color("violet", 600)};
-                background-color: ${theme.color("transparent")};
-                &:hover {
-                  background-color: ${Color(theme.color("violet", 800))
-                    .alpha(0.2)
-                    .toString()};
-                }
-                &:active {
-                  background-color: ${Color(theme.color("violet", 800))
-                    .alpha(0.3)
-                    .toString()};
-                }
-              `;
-            case "blue":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("blue", 600)};
-                }
-                color: ${theme.color("blue", 600)};
-                background-color: ${theme.color("transparent")};
-                &:hover {
-                  background-color: ${Color(theme.color("blue", 800))
-                    .alpha(0.2)
-                    .toString()};
-                }
-                &:active {
-                  background-color: ${Color(theme.color("blue", 800))
-                    .alpha(0.3)
-                    .toString()};
-                }
-              `;
-            case "gray":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("gray", 600)};
-                }
-                color: ${theme.color("gray", 600)};
-                background-color: ${theme.color("transparent")};
-                &:hover {
-                  background-color: ${Color(theme.color("gray", 800))
-                    .alpha(0.2)
-                    .toString()};
-                }
-                &:active {
-                  background-color: ${Color(theme.color("gray", 800))
-                    .alpha(0.3)
-                    .toString()};
-                }
-              `;
-            case "black":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("black", 600)};
-                }
-                color: ${theme.color("black", 600)};
-                background-color: ${theme.color("transparent")};
-                &:hover {
-                  background-color: ${Color(theme.color("black", 800))
-                    .alpha(0.2)
-                    .toString()};
-                }
-                &:active {
-                  background-color: ${Color(theme.color("black", 800))
-                    .alpha(0.3)
-                    .toString()};
-                }
-              `;
-          }
-        } else if (variant === "transparent") {
-          switch (color) {
-            case "orange":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("orange", 600)};
-                }
-                color: ${theme.color("orange", 600)};
-                background-color: ${Color(theme.color("orange", 800))
-                  .alpha(0.15)
-                  .toString()};
-                &:hover {
-                  background-color: ${Color(theme.color("orange", 800))
-                    .alpha(0.3)
-                    .toString()};
-                }
-                &:active {
-                  background-color: ${Color(theme.color("orange", 800))
-                    .alpha(0.4)
-                    .toString()};
-                }
-              `;
-            case "red":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("red", 600)};
-                }
-                color: ${theme.color("red", 600)};
-                background-color: ${Color(theme.color("red", 800))
-                  .alpha(0.15)
-                  .toString()};
-                &:hover {
-                  background-color: ${Color(theme.color("red", 800))
-                    .alpha(0.3)
-                    .toString()};
-                }
-                &:active {
-                  background-color: ${Color(theme.color("red", 800))
-                    .alpha(0.4)
-                    .toString()};
-                }
-              `;
-            case "yellow":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("yellow", 600)};
-                }
-                color: ${theme.color("yellow", 600)};
-                background-color: ${Color(theme.color("yellow", 800))
-                  .alpha(0.15)
-                  .toString()};
-                &:hover {
-                  background-color: ${Color(theme.color("yellow", 800))
-                    .alpha(0.3)
-                    .toString()};
-                }
-                &:active {
-                  background-color: ${Color(theme.color("yellow", 800))
-                    .alpha(0.4)
-                    .toString()};
-                }
-              `;
-            case "green":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("green", 600)};
-                }
-                color: ${theme.color("green", 600)};
-                background-color: ${Color(theme.color("green", 800))
-                  .alpha(0.15)
-                  .toString()};
-                &:hover {
-                  background-color: ${Color(theme.color("green", 800))
-                    .alpha(0.3)
-                    .toString()};
-                }
-                &:active {
-                  background-color: ${Color(theme.color("green", 800))
-                    .alpha(0.4)
-                    .toString()};
-                }
-              `;
-            case "violet":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("violet", 600)};
-                }
-                color: ${theme.color("violet", 600)};
-                background-color: ${Color(theme.color("violet", 800))
-                  .alpha(0.15)
-                  .toString()};
-                &:hover {
-                  background-color: ${Color(theme.color("violet", 800))
-                    .alpha(0.3)
-                    .toString()};
-                }
-                &:active {
-                  background-color: ${Color(theme.color("violet", 800))
-                    .alpha(0.4)
-                    .toString()};
-                }
-              `;
-            case "blue":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("blue", 600)};
-                }
-                color: ${theme.color("blue", 600)};
-                background-color: ${Color(theme.color("blue", 800))
-                  .alpha(0.15)
-                  .toString()};
-                &:hover {
-                  background-color: ${Color(theme.color("blue", 800))
-                    .alpha(0.3)
-                    .toString()};
-                }
-                &:active {
-                  background-color: ${Color(theme.color("blue", 800))
-                    .alpha(0.4)
-                    .toString()};
-                }
-              `;
-            case "gray":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("gray", 600)};
-                }
-                color: ${theme.color("gray", 600)};
-                background-color: ${Color(theme.color("gray", 800))
-                  .alpha(0.15)
-                  .toString()};
-                &:hover {
-                  background-color: ${Color(theme.color("gray", 800))
-                    .alpha(0.3)
-                    .toString()};
-                }
-                &:active {
-                  background-color: ${Color(theme.color("gray", 800))
-                    .alpha(0.4)
-                    .toString()};
-                }
-              `;
-            case "black":
-              return css`
-                ${LoadingIcon} {
-                  border-color: ${theme.color("black", 600)};
-                }
-                color: ${theme.color("black", 600)};
-                background-color: ${Color(theme.color("black", 800))
-                  .alpha(0.15)
-                  .toString()};
-                &:hover {
-                  background-color: ${Color(theme.color("black", 800))
-                    .alpha(0.3)
-                    .toString()};
-                }
-                &:active {
-                  background-color: ${Color(theme.color("black", 800))
-                    .alpha(0.4)
-                    .toString()};
-                }
-              `;
-          }
-        } else {
-          switch (color) {
-            case "orange":
-              return css`
-                background-color: ${theme.color("orange", 500)};
+      // Color & Variant
+      ${() => {
+        switch (variant) {
+          case "outline":
+            return css`
+              ${LoadingIcon} {
+                border-color: ${theme.color(color, 500)};
+              }
+              color: ${theme.color(color, 500)};
+              background-color: ${theme.color("transparent")};
+              border-color: ${theme.color(color, 500)};
+              &:hover {
                 color: ${theme.color("white")};
-                &:hover {
-                  background-color: ${theme.color("orange", 600)};
-                }
-                &:active {
-                  background-color: ${theme.color("orange", 700)};
-                }
-              `;
-            case "red":
-              return css`
-                background-color: ${theme.color("red", 500)};
-                color: ${theme.color("white")};
-                &:hover {
-                  background-color: ${theme.color("red", 600)};
-                }
-                &:active {
-                  background-color: ${theme.color("red", 700)};
-                }
-              `;
-            case "yellow":
-              return css`
-                background-color: ${theme.color("yellow", 500)};
-                color: ${theme.color("white")};
-                &:hover {
-                  background-color: ${theme.color("yellow", 600)};
-                }
-                &:active {
-                  background-color: ${theme.color("yellow", 700)};
-                }
-              `;
-            case "green":
-              return css`
-                background-color: ${theme.color("green", 600)};
-                color: ${theme.color("white")};
-                &:hover {
-                  background-color: ${theme.color("green", 700)};
-                }
-                &:active {
-                  background-color: ${theme.color("green", 800)};
-                }
-              `;
-            case "violet":
-              return css`
-                background-color: ${theme.color("violet", 500)};
-                color: ${theme.color("white")};
-                &:hover {
-                  background-color: ${theme.color("violet", 600)};
-                }
-                &:active {
-                  background-color: ${theme.color("violet", 700)};
-                }
-              `;
-            case "blue":
-              return css`
-                background-color: ${theme.color("blue", 600)};
-                color: ${theme.color("white")};
-                &:hover {
-                  background-color: ${theme.color("blue", 700)};
-                }
-                &:active {
-                  background-color: ${theme.color("blue", 800)};
-                }
-              `;
-            case "gray":
-              return css`
-                background-color: ${theme.color("gray", 600)};
-                color: ${theme.color("white")};
-                &:hover {
-                  background-color: ${theme.color("gray", 700)};
-                }
-                &:active {
-                  background-color: ${theme.color("gray", 800)};
-                }
-              `;
-            case "black":
-              return css`
-                background-color: ${theme.color("black", 800)};
-                color: ${theme.color("white")};
-                &:hover {
-                  background-color: ${theme.color("black", 900)};
-                }
-                &:active {
-                  background-color: ${theme.color("black", 950)};
-                }
-              `;
-          }
+                background-color: ${theme.color(color, 500)};
+              }
+              &:active {
+                border-color: ${theme.color(color, 600)};
+                background-color: ${theme.color(color, 600)};
+              }
+            `;
+          case "link":
+            return css`
+              ${LoadingIcon} {
+                border-color: ${theme.color(color, 600)};
+              }
+              color: ${theme.color(color, 600)};
+              background-color: ${theme.color("transparent")};
+              &:active {
+                color: ${theme.color(color, 700)};
+              }
+            `;
+          case "text":
+            return css`
+              ${LoadingIcon} {
+                border-color: ${theme.color(color, 600)};
+              }
+              color: ${theme.color(color, 600)};
+              background-color: ${theme.color("transparent")};
+              &:hover {
+                background-color: ${Color(theme.color(color, 800))
+                  .alpha(0.2)
+                  .toString()};
+              }
+              &:active {
+                background-color: ${Color(theme.color(color, 800))
+                  .alpha(0.3)
+                  .toString()};
+              }
+            `;
+          case "transparent":
+            return css`
+              ${LoadingIcon} {
+                border-color: ${theme.color(color, 600)};
+              }
+              color: ${theme.color(color, 600)};
+              background-color: ${Color(theme.color(color, 800))
+                .alpha(isDarkTheme ? 0.25 : 0.15)
+                .toString()};
+              &:hover {
+                background-color: ${Color(theme.color(color, 800))
+                  .alpha(isDarkTheme ? 0.4 : 0.3)
+                  .toString()};
+              }
+              &:active {
+                background-color: ${Color(theme.color(color, 800))
+                  .alpha(isDarkTheme ? 0.5 : 0.4)
+                  .toString()};
+              }
+            `;
+          default:
+            return css`
+              background-color: ${theme.color(color, 500)};
+              color: ${theme.color("white")};
+              &:hover {
+                background-color: ${theme.color(color, 600)};
+              }
+              &:active {
+                background-color: ${theme.color(color, 700)};
+              }
+            `;
         }
       }}
     `,

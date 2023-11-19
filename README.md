@@ -21,9 +21,10 @@ Esse projeto está sendo desenvolvido com as seguintes tecnologias:
 - [Vite](https://vitejs.dev/)
 - [Styled Components](https://styled-components.com/)
 
-## 🔖 Layout
+## 🔖 Componentes
 
-Você pode acompanhar os protótipos e utilitários através [desse link](https://www.figma.com/file/vhq8dGgpVmlYS0qIgnea8G/bibUI).
+Você pode acompanhar os componentes através do [Storybook](https://brunoibarbosa.github.io/bib-ui)
+ou visualizar os protótipos e utilitários através do [Figma](https://www.figma.com/file/vhq8dGgpVmlYS0qIgnea8G/bibUI).
 
 ## :memo: Licença
 
