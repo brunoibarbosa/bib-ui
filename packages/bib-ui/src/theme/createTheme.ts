@@ -1,5 +1,5 @@
 import { merge } from "lodash";
-import { defaultThemeProps } from "./defaultTheme";
+import { getDefaultThemeProps } from "./defaultTheme";
 import { UIThemeModel } from "./model";
 import { UITheme, UIThemeConstructorProps } from "./types";
 
@@ -12,6 +12,8 @@ type PartialTheme<T> = T extends object
 export function createTheme(
   props: PartialTheme<UIThemeConstructorProps>
 ): UITheme {
-  const theme = new UIThemeModel(merge(defaultThemeProps, props));
+  const theme = new UIThemeModel(
+    merge(getDefaultThemeProps({ mode: props.palette?.mode ?? "light" }), props)
+  );
   return Object.create(theme);
 }

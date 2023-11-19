@@ -1,5 +1,5 @@
 import type { Preview } from "@storybook/react";
-import { UIConfigProvider, createTheme } from "bib-ui";
+import { ThemeProvider, createTheme } from "bib-ui";
 import React from "react";
 
 const myTheme = createTheme({});
@@ -17,7 +17,7 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <UIConfigProvider theme={myTheme}>
+      <ThemeProvider theme={myTheme}>
         <div
           style={{
             display: "flex",
@@ -29,7 +29,7 @@ const preview: Preview = {
         >
           <Story />
         </div>
-      </UIConfigProvider>
+      </ThemeProvider>
     ),
   ],
 };

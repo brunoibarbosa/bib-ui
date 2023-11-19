@@ -2,6 +2,7 @@ import Color from "color";
 import {
   ColorTheme,
   ComponentTheme,
+  PaletteTheme,
   SpacingTheme,
   TypographyTheme,
   UIColorScale,
@@ -11,14 +12,14 @@ import {
 } from "./types";
 
 export class UIThemeModel implements UITheme {
-  private colors: ColorTheme;
+  private palette: PaletteTheme;
   private baseSpacing: SpacingTheme;
   public components: Partial<ComponentTheme>;
   public typography: TypographyTheme;
   private DEFAULT_SCALE = 500;
 
   constructor(props: UIThemeConstructorProps) {
-    this.colors = props.colors;
+    this.palette = props.palette;
     this.components = props.components;
     this.baseSpacing = props.spacing;
     this.typography = props.typography;
@@ -28,7 +29,7 @@ export class UIThemeModel implements UITheme {
     color: keyof ColorTheme,
     selector?: keyof UIColorScale | keyof UIColorTone
   ) {
-    const colorTheme = this.colors[color];
+    const colorTheme = this.palette.colors[color];
     if (selector) {
       if (typeof colorTheme === "object") {
         if ("DEFAULT" in colorTheme) {
@@ -108,7 +109,7 @@ export class UIThemeModel implements UITheme {
     } else {
       if (typeof colorTheme === "object") {
         if ("DEFAULT" in colorTheme) {
-          return colorTheme["400"];
+          return colorTheme["DEFAULT"];
         } else {
           return colorTheme["main"];
         }
