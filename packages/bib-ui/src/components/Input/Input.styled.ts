@@ -51,9 +51,7 @@ export const StyledInput = styled(UnstyledInput)(({ theme, ...props }) => {
               color ?? "text",
               color ? "DEFAULT" : isDarkTheme ? 50 : 950
             )
-          )
-            .alpha(0.6)
-            .toString()};
+          ).toString()};
       }
 
       // Size

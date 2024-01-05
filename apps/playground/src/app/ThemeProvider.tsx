@@ -2,7 +2,7 @@
 
 import {
   Button,
-  PaletteThemeMode,
+  PaletteTheme,
   ThemeProvider as UIThemeProvider,
   createTheme,
 } from "bib-ui";
@@ -14,7 +14,7 @@ export default function ThemeClient({
 }: {
   children: React.ReactNode;
 }) {
-  const [themeMode, setThemeMode] = useState<PaletteThemeMode>("dark");
+  const [themeMode, setThemeMode] = useState<PaletteTheme["mode"]>("dark");
 
   const myTheme = createTheme({
     palette: {
@@ -38,12 +38,14 @@ export default function ThemeClient({
   };
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
+    const savedTheme = localStorage.getItem("theme") as
+      | PaletteTheme["mode"]
+      | null;
     const prefersDark =
       window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches;
     if (savedTheme && ["dark", "light"].includes(savedTheme)) {
-      setThemeMode(savedTheme as PaletteThemeMode);
+      setThemeMode(savedTheme);
     } else if (prefersDark) {
       setThemeMode("dark");
     }
