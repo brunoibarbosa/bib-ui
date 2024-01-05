@@ -2,7 +2,7 @@
 
 import {
   Button,
-  PaletteThemeMode,
+  PaletteTheme,
   ThemeProvider as UIThemeProvider,
   createTheme,
 } from "bib-ui";
@@ -14,7 +14,7 @@ export default function ThemeClient({
 }: {
   children: React.ReactNode;
 }) {
-  const [themeMode, setThemeMode] = useState<PaletteThemeMode>("dark");
+  const [themeMode, setThemeMode] = useState<PaletteTheme["mode"]>("dark");
 
   const myTheme = createTheme({
     palette: {
@@ -38,12 +38,14 @@ export default function ThemeClient({
   };
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
+    const savedTheme = localStorage.getItem("theme") as
+      | PaletteTheme["mode"]
+      | null;
     const prefersDark =
       window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches;
     if (savedTheme && ["dark", "light"].includes(savedTheme)) {
-      setThemeMode(savedTheme as PaletteThemeMode);
+      setThemeMode(savedTheme);
     } else if (prefersDark) {
       setThemeMode("dark");
     }
@@ -53,7 +55,7 @@ export default function ThemeClient({
     <UIThemeProvider theme={myTheme}>
       <body
         data-theme={themeMode}
-        className="data-[theme='dark']:bg-[#0f0f0f] transition-colors group"
+        className="data-[theme='dark']:bg-[#1c1c1c] transition-colors group"
       >
         <div className="fixed top-0 right-0 p-4 flex justify-end transition-colors border-b-[#d4d4d4] border-b-[1px] group-data-[theme='dark']:border-b-[#2c2c2c] w-full">
           <Button color="orange" onClick={toggleThemeMode}>

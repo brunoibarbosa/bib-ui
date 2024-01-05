@@ -40,15 +40,33 @@ export const StyledButton = styled(UnstyledButton)(({ theme, ...props }) => {
       transition-duration: 150ms;
       border-width: 1px;
       border-color: ${theme.color("transparent")};
+      outline: none;
 
-      &:focus-visible {
-        outline: none;
-        transition: box-shadow 100ms;
-        box-shadow: 0 0 0 2px
-          ${Color(theme.color(color, 500))
-            .alpha(isDarkTheme ? 0.2 : 0.3)
-            .toString()};
-      }
+      ${() => {
+        switch (variant) {
+          case "default":
+          case "transparent":
+          case "text":
+          case "outline":
+            return css`
+              &:focus-visible {
+                transition: box-shadow 100ms;
+                box-shadow: 0 0 0 2px
+                    ${isDarkTheme
+                      ? theme.color("black", 950)
+                      : theme.color("white")},
+                  0 0 0 4px
+                    ${Color(theme.color(color, 500)).alpha(0.3).toString()};
+              }
+            `;
+          case "link":
+            return css`
+              &:focus-visible {
+                text-decoration: underline;
+              }
+            `;
+        }
+      }}
 
       // Disabled
       &:disabled {
@@ -202,6 +220,7 @@ export const StyledButton = styled(UnstyledButton)(({ theme, ...props }) => {
                 background-color: ${theme.color(color, 500)};
               }
               &:active {
+                color: ${theme.color("white")};
                 border-color: ${theme.color(color, 600)};
                 background-color: ${theme.color(color, 600)};
               }
