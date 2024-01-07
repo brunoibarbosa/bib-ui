@@ -7,7 +7,7 @@
     "build": "storybook build --docs",
     "preview-storybook": "serve storybook-static",
     "publish": "pnpm build && touch ./storybook-static/.nojekyll && gh-pages -d ./storybook-static -t true",
-    "clean": "rm -rf .turbo && rm -rf node_modules",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf storybook-static",
     "lint": "eslint ./stories/*.stories.tsx"
   },
   "dependencies": {
