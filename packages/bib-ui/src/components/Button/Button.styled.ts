@@ -17,6 +17,7 @@ export const StyledButton = styled(UnstyledButton)(({ theme, ...props }) => {
     asIcon,
     variant,
     themeMode,
+    disableOutlineOnFocus,
   } = mergedProps;
 
   const isDarkTheme = themeMode === "dark";
@@ -47,7 +48,9 @@ export const StyledButton = styled(UnstyledButton)(({ theme, ...props }) => {
           case "default":
           case "transparent":
           case "text":
-          case "outline":
+          case "outline": {
+            if (disableOutlineOnFocus) return ''
+
             return css`
               &:focus-visible {
                 transition: box-shadow 100ms;
@@ -58,7 +61,8 @@ export const StyledButton = styled(UnstyledButton)(({ theme, ...props }) => {
                   0 0 0 4px
                     ${Color(theme.color(color, 500)).alpha(0.3).toString()};
               }
-            `;
+            `
+          };
           case "link":
             return css`
               &:focus-visible {
@@ -278,6 +282,7 @@ export const StyledButton = styled(UnstyledButton)(({ theme, ...props }) => {
             return css`
               background-color: ${theme.color(color, 500)};
               color: ${theme.color("white")};
+              &:focus-visible,
               &:hover {
                 background-color: ${theme.color(color, 600)};
               }

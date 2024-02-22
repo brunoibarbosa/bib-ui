@@ -24,4 +24,5 @@ export interface ButtonProps
   endIcon?: React.ReactNode;
   fullWidth?: boolean;
   themeMode?: ButtonTheme;
+  disableOutlineOnFocus?: boolean
 }

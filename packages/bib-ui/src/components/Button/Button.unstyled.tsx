@@ -22,6 +22,7 @@ export const UnstyledButton = forwardRef<HTMLButtonElement, ButtonProps>(
       "color",
       "variant",
       "themeMode",
+      "disableOutlineOnFocus"
     ]);
 
     const Comp = asChild ? Slot : "button";
